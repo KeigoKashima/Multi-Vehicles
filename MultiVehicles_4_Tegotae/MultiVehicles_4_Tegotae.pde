@@ -57,7 +57,7 @@ public float MotorTorque = 1000.0;//モータトルクの強度
 //直動ジョイント
 public Vec2 PrismaticJointVector= new Vec2(0, -1);//ボディの可動方向
 public float PrismaticJointForce = 1000.0;//可動方向へ動くモータの力
-public float PGain = 200000;
+public float PGain = 3000;
 
 public float frequencyHz = 10;
 public float dampingRatio = 1;
