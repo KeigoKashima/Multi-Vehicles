@@ -30,8 +30,8 @@ static int WindowWidth = 1500;
 static int WindowHeight = 500;
 
 //地形
-public float Frequency = 5;//周波数
-public float Amplitude = 20;//振幅
+public float Frequency = 2;//周波数
+public float Amplitude = 40;//振幅
 
 //物理パラメータ
 public float Friction = 0.8;//摩擦
@@ -60,7 +60,7 @@ public float PrismaticJointForce = 1000.0;//可動方向へ動くモータの力
 public float PGain = 100;
 public float PrismaticMotorSpeed = 1;
 
-public float frequencyHz = 7;
+public float frequencyHz = 10;
 public float dampingRatio = 1;
 
 //////////////////////////////////////////
@@ -111,7 +111,7 @@ void draw() {
                 car.display();
                 //高さを変える関数
                 if (car.motorOn()) car.changeHeight();
-                if(i == 2) car.textDistance();
+                if(i == 1) car.textDistance();
                 i++;
         }
 
