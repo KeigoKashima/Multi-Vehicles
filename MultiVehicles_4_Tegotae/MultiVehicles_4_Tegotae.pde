@@ -30,8 +30,8 @@ static int WindowWidth = 1500;
 static int WindowHeight = 500;
 
 //地形
-public float Frequency = 2;//周波数
-public float Amplitude = 40;//振幅
+public float Frequency = 5;//周波数
+public float Amplitude = 30;//振幅
 
 //物理パラメータ
 public float Friction = 0.8;//摩擦
@@ -58,7 +58,7 @@ public float MotorTorque = 1000.0;//モータトルクの強度
 public Vec2 PrismaticJointVector= new Vec2(0, -1);//ボディの可動方向
 public float PrismaticJointForce = 1000.0;//可動方向へ動くモータの力
 public float PGain = 100;
-public float PrismaticMotorSpeed = 1;
+public float PrismaticMotorSpeed = 2;
 
 public float frequencyHz = 10;
 public float dampingRatio = 1;
