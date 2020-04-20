@@ -18,7 +18,7 @@ class Robot{
 
 
             //固有角速度
-            float omega = PI/10;
+            float omega = PI/100;
             //位相振動子
             float phi = 0;
             //高さの変化量
@@ -83,7 +83,7 @@ class Robot{
                     //直動ジョイントの定義
                     PrismaticJointDef pjd2 = new PrismaticJointDef();
                     //直動ジョイントの設定
-                    Vec2 anchorLine2 = nidai.body.getWorldCenter(); //アンカーの座標をリンクの先にする．
+                    Vec2 anchorLine2 = line2.body.getWorldCenter(); //アンカーの座標をリンクの先にする．
                     Vec2 direction2 = box2d.vectorPixelsToWorld(PrismaticJointVector);//ボディの可動方向を決める．
                     pjd2.initialize(line2.body,nidai.body,anchorLine2,direction2);//引数は（接続元，接続先，接続先の接続点を示すVec2，可動方向を示すVec2）
                     //変形範囲
@@ -113,7 +113,9 @@ class Robot{
             void textDistance(){
                     float distance = box2d.scalarPixelsToWorld(line1.body.getPosition().y)-box2d.scalarPixelsToWorld(line2.body.getPosition().y);       
                     float l = initDistance-distance;
-                    text(phi,10*width/20, 15*height/20);
+                    text("l: "+l,10*width/20, 15*height/20);
+                    text("phi: "+phi,10*width/20, 16*height/20);
+                    text("dH: "+dH,10*width/20, 17*height/20);
             }
             
             
@@ -137,13 +139,14 @@ class Robot{
                     float distance = box2d.scalarPixelsToWorld(line1.body.getPosition().y)-box2d.scalarPixelsToWorld(line2.body.getPosition().y);       
                     float l = initDistance-distance;
                     //バネの変位量を力に変換
-                    float N = l*PGain;
+                    float N = l*10;
 
                     //振動子の時間発展
-                    float dPhi = omega - (1/(1+N))*sin(2*phi); 
+                    float dPhi = omega - PGain*(1/(1+N))*sin(2*phi); 
                     phi += dPhi;
 
                     //phiの範囲は -PI<phi<PI
+                    phi = phi%(2*PI);
                     if(phi > PI)  phi -= 2*PI;
                     if(phi < -PI) phi += 2*PI;
 
