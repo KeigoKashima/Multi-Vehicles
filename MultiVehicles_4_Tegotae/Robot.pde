@@ -15,7 +15,15 @@ class Robot{
             
             //初期状態におけるline1とline2y座標の差
             float initDistance = 0;
-            
+
+
+            //固有角速度
+            float omega = PI/10;
+            //位相振動子
+            float phi = 0;
+            //高さの変化量
+            float dH = 0;
+
             //////////////////////////////////////////
             //----------------設定-----------------///
             //////////////////////////////////////////
@@ -96,8 +104,8 @@ class Robot{
             void display(){
                     float l = box2d.getBodyPixelCoord(wheel.body).y- box2d.getBodyPixelCoord(nidai.body).y;
                     wheel.display();
-                    line1.display(3,255);
-                    line2.display(3,3);
+                    line1.display(l,255);
+                //     line2.display(3,3);
                     nidai.display();
                     fill(0);
             }
@@ -105,7 +113,7 @@ class Robot{
             void textDistance(){
                     float distance = box2d.scalarPixelsToWorld(line1.body.getPosition().y)-box2d.scalarPixelsToWorld(line2.body.getPosition().y);       
                     float l = initDistance-distance;
-                    text(l,10*width/20, 15*height/20);
+                    text(phi,10*width/20, 15*height/20);
             }
             
             
@@ -124,10 +132,28 @@ class Robot{
             //=========================高さに関する関数================================///
             //引数に入れたオブジェクトの車輪のy座標と車体の高さから自身の高さを更新する関数
             //引数にRobotオブジェクト
-            void changeHeight() {    
+            void changeHeight() {  
+                    //うける力をバネの変位量で表現  
                     float distance = box2d.scalarPixelsToWorld(line1.body.getPosition().y)-box2d.scalarPixelsToWorld(line2.body.getPosition().y);       
                     float l = initDistance-distance;
-                    pj2.setMotorSpeed(l*PGain);  
+                    //バネの変位量を力に変換
+                    float N = l*PGain;
+
+                    //振動子の時間発展
+                    float dPhi = omega - (1/(1+N))*sin(2*phi); 
+                    phi += dPhi;
+
+                    //phiの範囲は -PI<phi<PI
+                    if(phi > PI)  phi -= 2*PI;
+                    if(phi < -PI) phi += 2*PI;
+
+                    //phiによって高さの移動方向を決める
+                    if(phi>-(PI/2) && phi<PI/2) dH = PrismaticMotorSpeed;
+                    else dH = -PrismaticMotorSpeed;
+                    
+                    //高さの速度をセット
+                    pj2.setMotorSpeed(dH);
+
             }
             
             //初期状態でのline1とline2のy座標の差を取得
