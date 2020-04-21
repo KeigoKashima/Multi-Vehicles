@@ -18,7 +18,7 @@ class Robot{
 
 
             //固有角速度
-            float omega = PI/1000;
+            float omega = 5*PI/1.2;
             //位相振動子
             float phi = 0;
             //高さの変化量
@@ -139,10 +139,12 @@ class Robot{
                     float distance = box2d.scalarPixelsToWorld(line1.body.getPosition().y)-box2d.scalarPixelsToWorld(line2.body.getPosition().y);       
                     float l = initDistance-distance;
                     //バネの変位量を力に変換
-                    float N = l*100;
+                    float N = l*1000;
+
+                    if(N<(sigma/omega)-1) text("TRUE",10*width/20, 18*height/20);
 
                     //振動子の時間発展
-                    float dPhi = omega + PGain*(1/(1+N))*sin(2*phi); 
+                    float dPhi = omega + sigma*(1/(1+N))*sin(2*phi); 
                     phi += dPhi;
 
                     //phiの範囲は -PI<phi<PI

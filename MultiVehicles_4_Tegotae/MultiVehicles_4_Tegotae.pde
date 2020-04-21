@@ -57,8 +57,8 @@ public float MotorTorque = 1000.0;//モータトルクの強度
 //直動ジョイント
 public Vec2 PrismaticJointVector= new Vec2(0, -1);//ボディの可動方向
 public float PrismaticJointForce = 1000.0;//可動方向へ動くモータの力
-public float PGain = 100;
 public float PrismaticMotorSpeed = 2;
+public float sigma = 5*PI;
 
 public float frequencyHz = 10;
 public float dampingRatio = 1;
@@ -143,8 +143,8 @@ void draw() {
         //積載物の質量
         text( "Load Weight : "+load.body.getMass(),width/20, 17*height/20);
         text( "PrismatidJointForce : "+PrismaticJointForce,width/20, 18*height/20);
-        //比例ゲイン
-        text( "Proportional Gain : "+PGain,width/20, 19*height/20);
+        //ゲイン
+        text( "Sigma : "+sigma,width/20, 19*height/20);
 
         //==データ==//
         textSize(16);
