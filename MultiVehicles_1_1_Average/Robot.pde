@@ -78,24 +78,14 @@ class Robot{
             //引数に入れたオブジェクトの車輪のy座標と車体の高さから自身の高さを更新する関数
             //引数にRobotオブジェクト
             void changeHeight(Robot...args) {
- 
+                    
                     float y = box2d.getBodyPixelCoord(nidai.body).y;  //真ん中のロボットのy座標
-                    
-                    int counter = 0;
+                    float distance = 0;
                     for (Robot robot : args) {
-                            float difference  = y - box2d.getBodyPixelCoord(robot.nidai.body).y;
-                            if( difference > 1) counter += 1;//真ん中より高ければ 1
-                            else if (difference < -1)counter -= 1;//真ん中より低ければ -1
-                            else counter += 0;
+                            distance += box2d.getBodyPixelCoord(robot.nidai.body).y ; //周りの荷台のy座標を足していく
                     }
+                    float sp = y-(y+distance)/(args.length+1);
                     
-                    //両隣が高ければ1
-                    //両隣が低ければ-1
-                    //両隣がばらばらなら0
-                    if (counter > 0) counter = 1;
-                    else if(counter < 0) counter = -1;
-                    else counter = 0;
-
-                    pj.setMotorSpeed(counter*MotorGain);    
+                    pj.setMotorSpeed(sp*MotorGain);    
             }
 }
