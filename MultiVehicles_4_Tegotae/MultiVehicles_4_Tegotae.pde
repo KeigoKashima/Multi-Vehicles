@@ -47,9 +47,9 @@ public float RobotHeight = 50;//車体と車輪の距離
 //積荷
 public float LoadWidth   = 150;//積荷_幅
 public float LoadHeight  =  30;//積荷_高さ
-public float LoadInitialPosX = 108;//積荷_初期位置_X
-public float LoadInitialPosY = 100;//積荷_初期位置_Y
-public float LoadDensity = 2;//積荷_密度
+public float LoadInitialPosX = 120;//積荷_初期位置_X
+public float LoadInitialPosY = 300;//積荷_初期位置_Y
+public float LoadDensity = 5;//積荷_密度
 
 //回転ジョイント
 public float MotorSpeed = 2*PI;//モータの速さ
@@ -57,8 +57,8 @@ public float MotorTorque = 1000.0;//モータトルクの強度
 //直動ジョイント
 public Vec2 PrismaticJointVector= new Vec2(0, -1);//ボディの可動方向
 public float PrismaticJointForce = 1000.0;//可動方向へ動くモータの力
-public float PrismaticMotorSpeed = 2;
-public float sigma = 5*PI;
+public float PrismaticMotorSpeed = 0.8;
+public float sigma = PI/10;
 
 public float frequencyHz = 10;
 public float dampingRatio = 1;
@@ -67,7 +67,7 @@ public float dampingRatio = 1;
 //----------------設定-----------------///
 //////////////////////////////////////////
 void setup() {
-        size(1500, 500);
+        size(1500, 800);
         //Box2Dワールドの初期化と作成
         box2d = new Box2DProcessing(this);
         box2d.createWorld();
@@ -111,7 +111,7 @@ void draw() {
                 car.display();
                 //高さを変える関数
                 if (car.motorOn()) car.changeHeight();
-                if(i == 1) car.textDistance();
+                car.textDistance(i);
                 i++;
         }
 
@@ -137,25 +137,25 @@ void draw() {
 
         //==プロパティ==//
         //地形情報
-        text("Frequency : "+Frequency+", "+"Amplitude:"+Amplitude, width/20, 15*height/20);
-        //RevoluteJointモーターのON/OFF
-        text("Motor : "+status,width/20,16*height/20);
-        //積載物の質量
-        text( "Load Weight : "+load.body.getMass(),width/20, 17*height/20);
-        text( "PrismatidJointForce : "+PrismaticJointForce,width/20, 18*height/20);
-        //ゲイン
-        text( "Sigma : "+sigma,width/20, 19*height/20);
+        // text("Frequency : "+Frequency+", "+"Amplitude:"+Amplitude, width/20, 15*height/20);
+        // //RevoluteJointモーターのON/OFF
+        // text("Motor : "+status,width/20,16*height/20);
+        // //積載物の質量
+        // text( "Load Weight : "+load.body.getMass(),width/20, 17*height/20);
+        // text( "PrismatidJointForce : "+PrismaticJointForce,width/20, 18*height/20);
+        // //ゲイン
+        // text( "Sigma : "+sigma,width/20, 19*height/20);
 
-        //==データ==//
-        textSize(16);
-        text( "Load Angle : "+180*load.body.getAngle()/PI,5*width/20, 15*height/20);
+        // //==データ==//
+        // textSize(16);
+        // text( "Load Angle : "+180*load.body.getAngle()/PI,5*width/20, 15*height/20);
 
 
-        text( "m : Switch Motor",15*width/20, 15*height/20);
-        text( "p : Set initDistance",15*width/20, 16*height/20);
-        text( "x : Stop",15*width/20, 17*height/20);
-        text( "s : Resume",15*width/20, 18*height/20);
-        text( "w : Exit",15*width/20, 19*height/20);
+        // text( "m : Switch Motor",15*width/20, 15*height/20);
+        // text( "p : Set initDistance",15*width/20, 16*height/20);
+        // text( "x : Stop",15*width/20, 17*height/20);
+        // text( "s : Resume",15*width/20, 18*height/20);
+        // text( "w : Exit",15*width/20, 19*height/20);
 
 
 
