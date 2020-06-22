@@ -84,8 +84,8 @@ class Robot{
                     int counter = 0;
                     for (Robot robot : args) {
                             float difference  = y - box2d.getBodyPixelCoord(robot.nidai.body).y;
-                            if( difference > 1) counter += 1;//真ん中より高ければ 1
-                            else if (difference < -1)counter -= 1;//真ん中より低ければ -1
+                            if( difference > 1.5) counter += 1;//真ん中より高ければ 1
+                            else if (difference < -1.5)counter -= 1;//真ん中より低ければ -1
                             else counter += 0;
                     }
                     
