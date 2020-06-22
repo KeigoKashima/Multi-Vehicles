@@ -6,6 +6,7 @@ void keyPressed() {
                 for (Robot car: cars) {
                         car.toggleMotor();    
                 }  
+                Step = 0;
         }
         
         //一時停止
@@ -18,6 +19,8 @@ void keyPressed() {
         }         
         //終了
         if (key == 'w') {
+                file.flush();
+                file.close();
                 exit();
         }
 }

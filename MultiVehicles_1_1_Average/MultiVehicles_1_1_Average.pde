@@ -59,6 +59,14 @@ public Vec2 PrismaticJointVector= new Vec2(0, -0.1);//ボディの可動方向
 public float PrismaticJointForce = 100.0;//可動方向へ動く速度
 public float MotorGain = 10;
 
+
+//csvデータを出力
+public PrintWriter file;
+
+
+//ステップ数を格納する変数
+public int Step = 0;
+
 //////////////////////////////////////////
 //----------------設定-----------------///
 //////////////////////////////////////////
@@ -83,6 +91,9 @@ void setup() {
         
         //パーティクル
         //particles = new ArrayList<Particle>();
+        
+         //csvデータ用の準備
+         file = createWriter("F"+Frequency+"_A"+Amplitude+".csv");
 }
 
 
@@ -101,14 +112,31 @@ void draw() {
         //積載物を描画
         load.display();
         
-        // 全てのRobotを描画
-        for (Robot car : cars) car.display();
+      
+       
+        for (Robot car : cars){
+                  // 全てのRobotを描画
+                 car.display();
+        }
+       
         
         for (int i=0; i<NUM; i++) {
+        //高さ変える
                 if      (i==0)    cars.get(i).changeHeight(cars.get(i+1));//最後尾の場合
                 else if (i==NUM-1)cars.get(i).changeHeight(cars.get(i-1));//先頭の場合
                 else              cars.get(i).changeHeight(cars.get(i-1), cars.get(i+1));//それ以外
         }
+        
+        
+        //csvファイルにデータを保存する
+        file.print(Step);
+        for (int i=0; i<NUM; i++) {
+                //csvに高さデータを出力
+                 cars.get(i).printHeight();
+        }
+        cars.get(NUM-1).printSurface(); 
+        //改行
+         file.println("");
 
         ////パーティクルの描画
         //シェイプの確認用
@@ -124,6 +152,8 @@ void draw() {
                 if (car.motorOn()) status = "ON";
         }
         
+        
+        
         fill(0);
         
         
@@ -137,4 +167,7 @@ void draw() {
         text( "x : Stop",15*width/20, 16*height/20);
         text( "s : Resume",15*width/20, 17*height/20);
         text( "w : Exit",15*width/20, 18*height/20);
+        
+        
+        Step++;
 }

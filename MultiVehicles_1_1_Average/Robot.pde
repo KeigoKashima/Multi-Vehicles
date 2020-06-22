@@ -88,4 +88,13 @@ class Robot{
                     
                     pj.setMotorSpeed(sp*MotorGain);    
             }
+            
+            //========================= y座標をcsvファイルに出力する関数================================///
+            void printHeight(){
+                    file.print(nidai.body.getWorldCenter().y+",");
+            }
+             void printSurface(){
+                    file.print(wheel.body.getWorldCenter().y+",");
+            }
+           
 }
