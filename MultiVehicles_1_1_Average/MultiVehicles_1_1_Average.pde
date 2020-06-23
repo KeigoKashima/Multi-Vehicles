@@ -30,8 +30,8 @@ public int WindowWidth = 1000;
 public int WindowHeight = 500; 
 
 //地形
-public float Frequency = 2;//周波数
-public float Amplitude = 30;//振幅
+public float Frequency = 23;//周波数
+public float Amplitude = 5;//振幅
 
 //物理パラメータ
 public float Friction = 0.8;//摩擦
@@ -129,7 +129,7 @@ void draw() {
         
         
         //csvファイルにデータを保存する
-        file.print(Step);
+        file.print(Step+",");
         for (int i=0; i<NUM; i++) {
                 //csvに高さデータを出力
                  cars.get(i).printHeight();
